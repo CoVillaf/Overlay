@@ -1,0 +1,9 @@
+☐ Establish the app @created(2020-04-17 10:58)
+☐ Make a screen for experimenting with obs-websocket @created(2020-05-11 11:46)
+✔ Set up overlay.rhymu.com subdomain, S3 bucket, CloudFront distribution, etc. @created(2020-05-11 11:58) @done(2020-05-11 14:35)
+☐ Test that the overlay can open web sockets to other domains without any issues. @created(2020-05-11 11:59)
+☐ Include a stream timer @created(2020-04-17 10:58)
+☐ Include a "current task" which mods/vips can update @created(2020-04-17 10:58)
+    [17:12] PianoBoxer: @rhymu8354 You could allow mods to update the 'Current task' test through your bot. Something like: !curtask Separation item names\nfrom container\ndesciption
+☐ Include tools for controlling the lights @created(2020-04-17 11:00)
+☐ Allow viewers to define their own custom sound effects (they would of course need my approval) which they can play once per stream to announce their presence (or whatever else they want) @created(2020-04-22 13:38)

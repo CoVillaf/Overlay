@@ -1,0 +1,18 @@
+.ControlPanelHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.ControlPanelHeader > *:not(:first-child) {
+    margin-left: 10px;
+}
+
+.ControlPanelHeader-stream-name {
+    font-size: 125%;
+    margin-bottom: 10px;
+}
+
+.ControlPanelHeader-profile-image {
+    width: 100px;
+}

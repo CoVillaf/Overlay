@@ -4,6 +4,11 @@
     background-color: #282c34;
 }
 
+.ControlPanel h2,
+.ControlPanel h3 {
+    margin: 0 0 10px 0;
+}
+
 .ControlPanel-content {
     margin: 10px;
 }

@@ -10,6 +10,14 @@ const DefineAction = (type) => {
 
 [
     "Load",
+    "RequestConfiguration",
+    "RequestConfigurationBegin",
+    "RequestConfigurationEnd",
+    "RequestProfile",
+    "RequestProfileBegin",
+    "RequestProfileEnd",
     "SetKey",
+    "SetConfiguration",
     "SetControl",
+    "SetProfileImageUrl",
 ].forEach(actionType => DefineAction(actionType));

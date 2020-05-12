@@ -1,0 +1,9 @@
+.ObsControls {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.ObsControls > *:not(:first-child) {
+    margin-left: 10px;
+}

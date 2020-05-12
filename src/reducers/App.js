@@ -2,12 +2,27 @@ import { actionTypes } from "../actions";
 
 import {
     APP_PAGE_LOADING,
+    LOCAL_STORAGE_OBS_PASSWORD,
     LOCAL_STORAGE_TOKEN,
 } from "../constants";
 
+const GetInitialSetting = (settingKey, defaultSetting) => {
+    const setting = localStorage.getItem(settingKey);
+    return (
+        (setting == null)
+        ? defaultSetting
+        : setting
+    );
+};
+
 const initialState = {
+    authenticatedWithObs: false,
     configuration: null,
+    connectedToObs: false,
+    connectingToObs: false,
     key: null,
+    obsError: null,
+    obsPassword: GetInitialSetting(LOCAL_STORAGE_OBS_PASSWORD, ""),
     page: APP_PAGE_LOADING,
     profileImageUrl: null,
     requestingConfiguration: false,
@@ -20,6 +35,11 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case actionTypes.ClearObsError:
+            return {
+                ...state,
+                obsError: null,
+            };
         case actionTypes.ClearToken:
             localStorage.removeItem(LOCAL_STORAGE_TOKEN);
             return {
@@ -27,6 +47,36 @@ export default function (state = initialState, action) {
                 token: null,
                 userId: null,
                 userName: null,
+            };
+        case actionTypes.ConnectToObs:
+            const { password } = action;
+            localStorage.setItem(LOCAL_STORAGE_OBS_PASSWORD, password)
+            return {
+                ...state,
+                obsPassword: password,
+            };
+        case actionTypes.ConnectedToObs:
+            return {
+                ...state,
+                connectedToObs: true,
+                connectingToObs: false,
+            };
+        case actionTypes.ConnectingToObs:
+            return {
+                ...state,
+                connectingToObs: true,
+            };
+        case actionTypes.DisconnectedFromObs:
+            return {
+                ...state,
+                authenticatedWithObs: false,
+                connectedToObs: false,
+                connectingToObs: false,
+            };
+        case actionTypes.ObsAuthenticated:
+            return {
+                ...state,
+                authenticatedWithObs: true,
             };
         case actionTypes.RequestConfigurationBegin:
             return {
@@ -67,6 +117,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 key: action.key,
+            };
+        case actionTypes.SetObsError:
+            return {
+                ...state,
+                obsError: action.error,
             };
         case actionTypes.SetPage:
             return {

@@ -3,24 +3,24 @@ import { connect } from "react-redux";
 
 import { actions } from "../actions";
 
-import "./LogOutButton.css";
+import "./LogOutControls.css";
 
-const LogOutButton = ({
+const LogOutControls = ({
     onRevokeToken,
     token,
 }) => {
     if (token == null) {
         return null;
     }
-    return (
+    return <div className="LogOutControls">
         <button
-            className="LogOutButton"
+            className="LogOutControls-button"
             type="button"
             onClick={() => onRevokeToken()}
         >
             Log Out
         </button>
-    );
+    </div>;
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -34,5 +34,5 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LogOutButton);
+)(LogOutControls);
 

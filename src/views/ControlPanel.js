@@ -1,8 +1,9 @@
 import React from "react";
 
 import ControlPanelHeader from "./ControlPanelHeader";
-import LogInButton from "./LogInButton";
-import LogOutButton from "./LogOutButton";
+import LogInControls from "./LogInControls";
+import LogOutControls from "./LogOutControls";
+import ObsControls from "./ObsControls";
 import UserWelcome from "./UserWelcome";
 
 import "./ControlPanel.css";
@@ -12,12 +13,10 @@ const ControlPanel = () => {
         <div className="ControlPanel">
             <div className="ControlPanel-content">
                 <ControlPanelHeader />
-                <LogInButton />
+                <LogInControls />
                 <UserWelcome />
-                <LogOutButton />
-                <p>
-                    Interesting and useful controls will go here soon™!
-                </p>
+                <LogOutControls />
+                <ObsControls />
             </div>
         </div>
     );

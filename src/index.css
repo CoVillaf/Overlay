@@ -11,6 +11,7 @@ body {
     --button-color: #008000;
     --twitch-color: #6441a4;
     --danger-color: #cb4154;
+    --error-color: #cb4154;
 }
 
 code {
@@ -64,4 +65,8 @@ input {
 
 .horizontally-centered-row > *:not(:first-child) {
     margin-left: 10px;
+}
+
+.error-message {
+    color: var(--error-color);
 }

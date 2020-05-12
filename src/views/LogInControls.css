@@ -1,4 +1,8 @@
-.LogInButton {
+.LogInControls {
+    margin: 10px 0;
+}
+
+.LogInControls-button {
     --button-color: var(--twitch-color);
     display: flex;
     flex-direction: row;
@@ -6,15 +10,15 @@
     align-items: center;
 }
 
-.LogInButton > * {
+.LogInControls-button > * {
     flex: 0 0 auto;
 }
 
-.LogInButton > *:not(:first-child) {
+.LogInControls-button > *:not(:first-child) {
     margin-left: 10px;
 }
 
-.LogInButton > span {
+.LogInControls-button > span {
     font-family: Helvetica, sans-serif;
     font-size: 100%;
     font-variant: normal;

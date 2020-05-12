@@ -1,0 +1,7 @@
+.LogOutControls {
+    margin: 10px 0;
+}
+
+.LogOutControls-button {
+    --button-color: var(--danger-color);
+}

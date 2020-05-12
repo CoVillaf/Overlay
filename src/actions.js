@@ -9,8 +9,16 @@ const DefineAction = (type) => {
 };
 
 [
+    "ClearObsError",
     "ClearToken",
+    "ConnectedToObs",
+    "ConnectToObs",
+    "ConnectingToObs",
+    "DisconnectedFromObs",
+    "DisconnectFromObs",
     "Load",
+    "ObsAuthenticate",
+    "ObsAuthenticated",
     "RequestChannelInfo",
     "RequestChannelInfoBegin",
     "RequestChannelInfoEnd",
@@ -22,8 +30,9 @@ const DefineAction = (type) => {
     "RequestUserInfoBegin",
     "RequestUserInfoEnd",
     "RevokeToken",
-    "SetKey",
     "SetConfiguration",
+    "SetKey",
+    "SetObsError",
     "SetPage",
     "SetProfileImageUrl",
     "SetToken",

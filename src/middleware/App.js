@@ -7,6 +7,31 @@ import {
     OAUTH_TOKEN_MIN_EXPIRES_IN,
 } from "../constants";
 
+const CallHelix = ({
+    getState,
+    request,
+}) => {
+    const configuration = getState().app.configuration;
+    const token = getState().app.token;
+    return fetch(
+        new Request(
+            `https://api.twitch.tv/helix/${request}`,
+            {
+                headers: {
+                    "Client-ID": configuration.clientId,
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        )
+    )
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`${response.status} ${response.statusText}`);
+            }
+            return response.json();
+        })
+};
+
 const OnLoad = ({
     dispatch,
     getState,
@@ -59,26 +84,13 @@ const OnRequestChannelInfo = ({
         return;
     }
     dispatch(actions.RequestChannelInfoBegin());
-    fetch(
-        new Request(
-            `https://api.twitch.tv/kraken/users?login=${configuration.channel}`,
-            {
-                headers: {
-                    "Client-ID": configuration.clientId,
-                    Accept: "application/vnd.twitchtv.v5+json",
-                },
-            }
-        )
-    )
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`${response.status} ${response.statusText}`);
-            }
-            return response.json();
-        })
+    CallHelix({
+        getState,
+        request: `users?login=${configuration.channel}`
+    })
         .then(response => {
             dispatch(actions.SetProfileImageUrl({
-                profileImageUrl: response.users[0].logo,
+                profileImageUrl: response.data[0].profile_image_url,
             }));
         })
         .catch(error => {
@@ -120,8 +132,6 @@ const OnRequestConfiguration = ({
         })
         .catch(error => {
             console.error("Error requesting configuration", error);
-        })
-        .finally(() => {
             dispatch(actions.RequestConfigurationEnd());
         });
 };
@@ -174,26 +184,13 @@ const OnRequestUserInfo = ({
         return;
     }
     dispatch(actions.RequestUserInfoBegin());
-    fetch(
-        new Request(
-            `https://api.twitch.tv/kraken/users/${userId}`,
-            {
-                headers: {
-                    "Client-ID": configuration.clientId,
-                    Accept: "application/vnd.twitchtv.v5+json",
-                },
-            }
-        )
-    )
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`${response.status} ${response.statusText}`);
-            }
-            return response.json();
-        })
+    CallHelix({
+        getState,
+        request: `users?id=${userId}`
+    })
         .then(response => {
             dispatch(actions.SetUserInfo({
-                userName: response.name,
+                userName: response.data[0].display_name,
             }));
         })
         .catch(error => {

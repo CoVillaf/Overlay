@@ -31,3 +31,11 @@ export function RawStringToArrayBuffer(str) {
     }
     return buf;
 }
+
+export function Sha256Hash(input) {
+    return crypto.subtle.digest(
+        "SHA-256",
+        RawStringToArrayBuffer(input)
+    )
+        .then(hash => btoa(ArrayBufferToRawString(hash)));
+}

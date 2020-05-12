@@ -1,8 +1,7 @@
 import { actionTypes, actions } from "../actions";
 
 import {
-    ArrayBufferToRawString,
-    RawStringToArrayBuffer,
+    Sha256Hash,
 } from "../utilities";
 
 const SendToObs = ({
@@ -118,7 +117,7 @@ const OnDisconnectFromObs = ({
     dispatch(actions.DisconnectedFromObs());
 };
 
-const OnObsAuthenticate = async ({
+const OnObsAuthenticate = ({
     action: { challenge, salt },
     dispatch,
     enhancements,
@@ -127,22 +126,18 @@ const OnObsAuthenticate = async ({
     console.log("Authenticating with OBS");
     dispatch(actions.ClearObsError());
     const password = getState().app.obsPassword;
-    const hash1 = await crypto.subtle.digest("SHA-256", RawStringToArrayBuffer(password + salt));
-    const hash1b = btoa(ArrayBufferToRawString(hash1));
-    // @ts-ignore
-    const hash2 = await crypto.subtle.digest("SHA-256", RawStringToArrayBuffer(hash1b + challenge));
-    const hash2b = btoa(ArrayBufferToRawString(hash2));
-    const auth = hash2b;
-    // @ts-ignore
-    SendToObs({
-        enhancements,
-        type: "Authenticate",
-        extraFields: { auth },
-    })
+    Sha256Hash(password + salt)
+        .then(secret => Sha256Hash(secret + challenge))
+        .then(auth => SendToObs({
+            enhancements,
+            type: "Authenticate",
+            extraFields: { auth },
+        }))
         .then(() => {
             console.log("Successfully authenticated with OBS");
             dispatch(actions.ObsAuthenticated());
         })
+        // @ts-ignore
         .catch(error => {
             console.error("Error authenticating with OBS:", error);
             dispatch(actions.SetObsError({error}));

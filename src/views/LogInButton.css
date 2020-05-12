@@ -1,0 +1,21 @@
+.LogInButton {
+    --button-color: var(--twitch-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.LogInButton > * {
+    flex: 0 0 auto;
+}
+
+.LogInButton > *:not(:first-child) {
+    margin-left: 10px;
+}
+
+.LogInButton > span {
+    font-family: Helvetica, sans-serif;
+    font-size: 100%;
+    font-variant: normal;
+}

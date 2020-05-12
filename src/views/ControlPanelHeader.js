@@ -8,17 +8,17 @@ import profileImagePlaceholder from "./profile-image-placeholder.png";
 import "./ControlPanelHeader.css";
 
 const ControlPanelHeader = ({
-    onRequestProfile,
+    onRequestChannelInfo,
     profileImageUrl,
 }) => {
     useEffect(
         () => {
             if (!profileImageUrl) {
-                onRequestProfile();
+                onRequestChannelInfo();
             }
         },
         [
-            onRequestProfile,
+            onRequestChannelInfo,
             profileImageUrl
         ]
     );
@@ -46,7 +46,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onRequestProfile: () => dispatch(actions.RequestProfile()),
+    onRequestChannelInfo: () => dispatch(actions.RequestChannelInfo()),
 });
 
 export default connect(

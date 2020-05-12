@@ -1,9 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
-
-// import { actions } from "../actions";
 
 import ControlPanelHeader from "./ControlPanelHeader";
+import LogInButton from "./LogInButton";
+import LogOutButton from "./LogOutButton";
+import UserWelcome from "./UserWelcome";
 
 import "./ControlPanel.css";
 
@@ -12,6 +12,9 @@ const ControlPanel = () => {
         <div className="ControlPanel">
             <div className="ControlPanel-content">
                 <ControlPanelHeader />
+                <LogInButton />
+                <UserWelcome />
+                <LogOutButton />
                 <p>
                     Interesting and useful controls will go here soon™!
                 </p>
@@ -20,14 +23,5 @@ const ControlPanel = () => {
     );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-});
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ControlPanel);
+export default ControlPanel;
 

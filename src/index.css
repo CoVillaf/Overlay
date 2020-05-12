@@ -8,7 +8,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
     --default-link-color: #16b8ff;
     --visited-link-color: #cb00da;
-    --power-tool-selected-color: #aa2222;
+    --button-color: #008000;
+    --twitch-color: #6441a4;
+    --danger-color: #cb4154;
 }
 
 code {
@@ -30,15 +32,15 @@ a:visited.static-color {
 
 button {
     color: white;
-    border: 2px solid #008000;
+    border: 2px solid var(--button-color);
     border-radius: 2px;
-    background-color: #008000;
+    background-color: transparent;
     padding: 4px 12px;
     font-size: 100%;
 }
 
 button:hover {
-    background-color: #00aa00;
+    background-color: var(--button-color);
 }
 
 button:disabled {

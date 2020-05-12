@@ -1,12 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 
-import "./App.css";
+import { actions } from "../actions";
 
-const App = () => {
+import ControlPanel from "./ControlPanel";
+import Overlay from "./Overlay";
+
+const useOnceEffect = fn => useEffect(fn, []);
+
+const App = ({
+    control,
+    onLoad,
+}) => {
+    useOnceEffect(() => {
+        onLoad();
+    });
     return (
-        <div className="App">
-        </div>
+        control
+        ? <ControlPanel />
+        : <Overlay />
     );
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => ({
+    control: state.app.control,
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    onLoad: () => dispatch(actions.Load()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+

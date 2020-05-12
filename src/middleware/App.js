@@ -1,14 +1,21 @@
-// import { actionTypes, actions } from "../actions";
+import { actionTypes, actions } from "../actions";
 
-// const OnSomething = ({
-//     dispatch,
-//     getState,
-// }) => {
-//     dispatch(actions.SomethingElse({data}));
-// };
+const OnLoad = ({
+    dispatch,
+    getState,
+}) => {
+    const search = new URLSearchParams(window.location.search);
+    if (search.has("key")) {
+        const key = search.get("key");
+        dispatch(actions.SetControl({control: false}));
+        dispatch(actions.SetKey({key}));
+    } else {
+        dispatch(actions.SetControl({control: true}));
+    }
+};
 
 const handlers = {
-//     [actionTypes.Something]: OnSomething,
+    [actionTypes.Load]: OnLoad,
 };
 
 export default function({ getState, dispatch }) {

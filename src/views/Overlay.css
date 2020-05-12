@@ -1,0 +1,14 @@
+.Overlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    font-size: 150%;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.Overlay-content {
+    flex: 1;
+    overflow: hidden;
+}

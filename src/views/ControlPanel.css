@@ -1,0 +1,9 @@
+.ControlPanel {
+    min-height: 100vh;
+    overflow-y: hidden;
+    background-color: #282c34;
+}
+
+.ControlPanel-content {
+    margin: 10px;
+}

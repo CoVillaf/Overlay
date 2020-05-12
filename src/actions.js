@@ -9,4 +9,7 @@ const DefineAction = (type) => {
 };
 
 [
+    "Load",
+    "SetKey",
+    "SetControl",
 ].forEach(actionType => DefineAction(actionType));

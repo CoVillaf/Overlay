@@ -16,9 +16,14 @@ const OnConnectedToAlfred = ({
     SendToAlfred({
         enhancements,
         message: {
-            "Hello": "World",
+            type: "Greeting",
+            message: "Hello, World!",
         },
     });
+};
+
+const messageActionFactories = {
+    Error: ({message}) => actions.SetAlfredError({error: message}),
 };
 
 const OnConnectToAlfred = ({
@@ -52,7 +57,12 @@ const OnConnectToAlfred = ({
         'message',
         (event) => {
             const decodedMessage = JSON.parse(event.data);
-            console.log("PogChamp Alfred spoke to us!", decodedMessage);
+            const messageActionFactory = messageActionFactories[decodedMessage.type];
+            if (messageActionFactory) {
+                dispatch(messageActionFactory(decodedMessage));
+            } else {
+                console.warn("Unknown message type received from Alfred:", decodedMessage);
+            }
         }
     );
 };
@@ -71,7 +81,7 @@ const OnDisconnectFromAlfred = ({
     dispatch(actions.DisconnectedFromAlfred());
 };
 
-const handlers = {
+const actionHandlers = {
     [actionTypes.ConnectedToAlfred]: OnConnectedToAlfred,
     [actionTypes.ConnectToAlfred]: OnConnectToAlfred,
     [actionTypes.DisconnectFromAlfred]: OnDisconnectFromAlfred,
@@ -83,7 +93,7 @@ export default function({ getState, dispatch }) {
     };
     return next => action => {
         next(action);
-        const handler = handlers[action.type];
+        const handler = actionHandlers[action.type];
         if (handler) {
             // @ts-ignore
             handler({action, dispatch, enhancements, getState});

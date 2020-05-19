@@ -9,12 +9,18 @@ const DefineAction = (type) => {
 };
 
 [
+    "ClearAlfredError",
     "ClearObsError",
     "ClearToken",
+    "ConnectedToAlfred",
     "ConnectedToObs",
+    "ConnectToAlfred",
     "ConnectToObs",
+    "ConnectingToAlfred",
     "ConnectingToObs",
+    "DisconnectedFromAlfred",
     "DisconnectedFromObs",
+    "DisconnectFromAlfred",
     "DisconnectFromObs",
     "Load",
     "ObsAuthenticate",
@@ -32,6 +38,7 @@ const DefineAction = (type) => {
     "RevokeToken",
     "SetConfiguration",
     "SetKey",
+    "SetAlfredError",
     "SetObsError",
     "SetPage",
     "SetProfileImageUrl",

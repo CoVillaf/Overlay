@@ -1,0 +1,9 @@
+.AlfredControls {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.AlfredControls > *:not(:first-child) {
+    margin-left: 10px;
+}

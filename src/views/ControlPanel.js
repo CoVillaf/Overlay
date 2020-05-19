@@ -1,5 +1,6 @@
 import React from "react";
 
+import AlfredControls from "./AlfredControls";
 import ControlPanelHeader from "./ControlPanelHeader";
 import LogInControls from "./LogInControls";
 import LogOutControls from "./LogOutControls";
@@ -17,6 +18,7 @@ const ControlPanel = () => {
                 <UserWelcome />
                 <LogOutControls />
                 <ObsControls />
+                <AlfredControls />
             </div>
         </div>
     );

@@ -16,9 +16,12 @@ const GetInitialSetting = (settingKey, defaultSetting) => {
 };
 
 const initialState = {
+    alfredError: null,
     authenticatedWithObs: false,
     configuration: null,
+    connectedToAlfred: false,
     connectedToObs: false,
+    connectingToAlfred: false,
     connectingToObs: false,
     key: null,
     obsError: null,
@@ -35,6 +38,11 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case actionTypes.ClearAlfredError:
+            return {
+                ...state,
+                alfredError: null,
+            };
         case actionTypes.ClearObsError:
             return {
                 ...state,
@@ -55,16 +63,33 @@ export default function (state = initialState, action) {
                 ...state,
                 obsPassword: password,
             };
+        case actionTypes.ConnectedToAlfred:
+            return {
+                ...state,
+                connectedToAlfred: true,
+                connectingToAlfred: false,
+            };
         case actionTypes.ConnectedToObs:
             return {
                 ...state,
                 connectedToObs: true,
                 connectingToObs: false,
             };
+        case actionTypes.ConnectingToAlfred:
+            return {
+                ...state,
+                connectingToAlfred: true,
+            };
         case actionTypes.ConnectingToObs:
             return {
                 ...state,
                 connectingToObs: true,
+            };
+        case actionTypes.DisconnectedFromAlfred:
+            return {
+                ...state,
+                connectedToAlfred: false,
+                connectingToAlfred: false,
             };
         case actionTypes.DisconnectedFromObs:
             return {
@@ -107,6 +132,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 requestingUserInfo: false,
+            };
+        case actionTypes.SetAlfredError:
+            return {
+                ...state,
+                alfredError: action.error,
             };
         case actionTypes.SetConfiguration:
             return {

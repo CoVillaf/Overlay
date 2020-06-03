@@ -30,14 +30,19 @@ const messageActionFactories = {
 };
 
 const OnConnectToAlfred = ({
+    action,
     dispatch,
     enhancements,
     getState,
 }) => {
+    const configuration = getState().app.configuration;
+    if (!configuration) {
+        dispatch(actions.RequestConfiguration({then: action}));
+        return;
+    }
     dispatch(actions.ClearAlfredError());
     dispatch(actions.ConnectingToAlfred());
-    const alfredUrl = process.env.REACT_APP_ALFRED_URL;
-    const ws = new WebSocket(alfredUrl);
+    const ws = new WebSocket(configuration.alfredWsEndpoint);
     enhancements.ws = ws;
     ws.addEventListener(
         'open',

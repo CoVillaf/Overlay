@@ -36,7 +36,7 @@ const OnConnectToAlfred = ({
 }) => {
     dispatch(actions.ClearAlfredError());
     dispatch(actions.ConnectingToAlfred());
-    const ws = new WebSocket(`wss://localhost:8100/ws`);
+    const ws = new WebSocket(`wss://servers.omniaregna.com:8100/ws`);
     enhancements.ws = ws;
     ws.addEventListener(
         'open',

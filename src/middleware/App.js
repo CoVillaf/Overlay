@@ -69,18 +69,16 @@ const OnLoad = ({
 };
 
 const OnRequestChannelInfo = ({
+    action,
     dispatch,
-    enhancements,
     getState,
 }) => {
-    const { onConfigurationReceived } = enhancements;
     if (getState().app.requestingProfile) {
         return;
     }
     const configuration = getState().app.configuration;
     if (!configuration) {
-        onConfigurationReceived.push(actions.RequestChannelInfo());
-        dispatch(actions.RequestConfiguration());
+        dispatch(actions.RequestConfiguration({then: action}));
         return;
     }
     dispatch(actions.RequestChannelInfoBegin());
@@ -102,11 +100,15 @@ const OnRequestChannelInfo = ({
 };
 
 const OnRequestConfiguration = ({
+    action: { then },
     dispatch,
     enhancements,
     getState,
 }) => {
     const { onConfigurationReceived } = enhancements;
+    if (then) {
+        onConfigurationReceived.push(then);
+    }
     if (getState().app.requestingConfiguration) {
         return;
     }
@@ -124,7 +126,7 @@ const OnRequestConfiguration = ({
                 configuration,
             }));
             dispatch(actions.RequestConfigurationEnd());
-            enhancements.onConfigurationReceived = null;
+            enhancements.onConfigurationReceived = [];
             while (onConfigurationReceived.length > 0) {
                 const action = onConfigurationReceived.shift();
                 dispatch(action);
@@ -137,15 +139,13 @@ const OnRequestConfiguration = ({
 };
 
 const OnRequestToken = ({
-    enhancements,
+    action,
     dispatch,
     getState,
 }) => {
-    const { onConfigurationReceived } = enhancements;
     const configuration = getState().app.configuration;
     if (!configuration) {
-        onConfigurationReceived.push(actions.RequestToken());
-        dispatch(actions.RequestConfiguration());
+        dispatch(actions.RequestConfiguration({then: action}));
         return;
     }
     var array = new Uint32Array(1);
@@ -168,19 +168,17 @@ const OnRequestToken = ({
 };
 
 const OnRequestUserInfo = ({
+    action,
     dispatch,
-    enhancements,
     getState,
 }) => {
-    const { onConfigurationReceived } = enhancements;
     if (getState().app.requestingUserInfo) {
         return;
     }
     const userId = getState().app.userId;
     const configuration = getState().app.configuration;
     if (!configuration) {
-        onConfigurationReceived.push(actions.RequestUserInfo());
-        dispatch(actions.RequestConfiguration());
+        dispatch(actions.RequestConfiguration({then: action}));
         return;
     }
     dispatch(actions.RequestUserInfoBegin());
@@ -202,15 +200,13 @@ const OnRequestUserInfo = ({
 };
 
 const OnRevokeToken = ({
+    action,
     dispatch,
-    enhancements,
     getState,
 }) => {
-    const { onConfigurationReceived } = enhancements;
     const configuration = getState().app.configuration;
     if (!configuration) {
-        onConfigurationReceived.push(actions.RequestToken());
-        dispatch(actions.RequestConfiguration());
+        dispatch(actions.RequestConfiguration({then: action}));
         return;
     }
     const token = getState().app.token;
@@ -239,15 +235,13 @@ const OnRevokeToken = ({
 };
 
 const OnValidateToken = ({
+    action,
     dispatch,
-    enhancements,
     getState,
 }) => {
-    const { onConfigurationReceived } = enhancements;
     const configuration = getState().app.configuration;
     if (!configuration) {
-        onConfigurationReceived.push(actions.ValidateToken());
-        dispatch(actions.RequestConfiguration());
+        dispatch(actions.RequestConfiguration({then: action}));
         return;
     }
     const token = getState().app.token;

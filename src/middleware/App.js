@@ -3,6 +3,7 @@ import { actionTypes, actions } from "../actions";
 import {
     APP_PAGE_CONTROL_PANEL,
     APP_PAGE_OVERLAY,
+    CONFIGURATION_URL,
     LOCAL_STORAGE_OAUTH_STATE,
     OAUTH_TOKEN_MIN_EXPIRES_IN,
 } from "../constants";

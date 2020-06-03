@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 import { actions } from "../actions";
@@ -7,10 +7,19 @@ import "./AlfredConnectControls.css";
 
 const AlfredConnectControls = ({
     alfredError,
+    alfredKey,
+    authenticated,
     connectedToAlfred,
     connectingToAlfred,
     onConnectToAlfred,
+    onSetAlfredKey,
 }) => {
+    const [ newAlfredKey, setNewAlfredKey ] = useState(alfredKey);
+    if (authenticated) {
+        return <div>
+            Authenticated!
+        </div>;
+    }
     if (connectedToAlfred) {
         if (alfredError == null) {
             return <div>
@@ -31,10 +40,21 @@ const AlfredConnectControls = ({
         <button
             className="AlfredConnectControls-button"
             type="button"
-            onClick={() => onConnectToAlfred()}
+            onClick={() => {
+                if (newAlfredKey !== alfredKey) {
+                    onSetAlfredKey(newAlfredKey);
+                }
+                onConnectToAlfred();
+            }}
         >
             Connect
         </button>
+        <input
+            type="password"
+            placeholder="key"
+            value={newAlfredKey}
+            onChange={(event) => setNewAlfredKey(event.target.value)}
+        />
         {(
             (alfredError == null)
             ? null
@@ -45,12 +65,15 @@ const AlfredConnectControls = ({
 
 const mapStateToProps = (state, ownProps) => ({
     alfredError: state.app.alfredError,
+    alfredKey: state.app.key,
+    authenticated: state.app.authenticatedWithAlfred,
     connectedToAlfred: state.app.connectedToAlfred,
     connectingToAlfred: state.app.connectingToAlfred,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onConnectToAlfred: (password) => dispatch(actions.ConnectToAlfred({password})),
+    onSetAlfredKey: (key) => dispatch(actions.SetKey({key})),
 });
 
 export default connect(

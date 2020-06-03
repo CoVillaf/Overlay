@@ -9,6 +9,7 @@ const DefineAction = (type) => {
 };
 
 [
+    "AuthenticatedWithAlfred",
     "AuthenticatedWithObs",
     "ClearAlfredError",
     "ClearObsError",

@@ -9,20 +9,23 @@ const SendToAlfred = ({
 };
 
 const OnConnectedToAlfred = ({
-    dispatch,
     enhancements,
+    getState,
 }) => {
-    // @ts-ignore
-    SendToAlfred({
-        enhancements,
-        message: {
-            type: "Greeting",
-            message: "Hello, World!",
-        },
-    });
+    const key = getState().app.key;
+    if (key) {
+        SendToAlfred({
+            enhancements,
+            message: {
+                type: "Authenticate",
+                key,
+            },
+        });
+    }
 };
 
 const messageActionFactories = {
+    Authenticated: () => actions.AuthenticatedWithAlfred(),
     Error: ({message}) => actions.SetAlfredError({error: message}),
 };
 
@@ -46,10 +49,14 @@ const OnConnectToAlfred = ({
         'close',
         (event) => {
             console.log("Disconnected from Alfred");
-            enhancements.ws = null;
-            if (getState().app.connectingToAlfred) {
-                dispatch(actions.SetAlfredError({error: "failed to connect"}));
+            if (enhancements.ws) {
+                if (getState().app.connectingToAlfred) {
+                    dispatch(actions.SetAlfredError({error: "Failed to connect"}));
+                } else if (getState().app.alfredError == null) {
+                    dispatch(actions.SetAlfredError({error: "Unexpectedly disconnected"}));
+                }
             }
+            enhancements.ws = null;
             dispatch(actions.DisconnectedFromAlfred());
         }
     );
@@ -81,10 +88,17 @@ const OnDisconnectFromAlfred = ({
     dispatch(actions.DisconnectedFromAlfred());
 };
 
+const OnSetAlfredError = ({
+    action: { error }
+}) => {
+    console.warn("Alfred reported error:", error);
+};
+
 const actionHandlers = {
     [actionTypes.ConnectedToAlfred]: OnConnectedToAlfred,
     [actionTypes.ConnectToAlfred]: OnConnectToAlfred,
     [actionTypes.DisconnectFromAlfred]: OnDisconnectFromAlfred,
+    [actionTypes.SetAlfredError]: OnSetAlfredError,
 };
 
 export default function({ getState, dispatch }) {

@@ -17,13 +17,14 @@ const GetInitialSetting = (settingKey, defaultSetting) => {
 
 const initialState = {
     alfredError: null,
+    authenticatedWithAlfred: false,
     authenticatedWithObs: false,
     configuration: null,
     connectedToAlfred: false,
     connectedToObs: false,
     connectingToAlfred: false,
     connectingToObs: false,
-    key: null,
+    key: "",
     obsError: null,
     obsPassword: GetInitialSetting(LOCAL_STORAGE_OBS_PASSWORD, ""),
     page: APP_PAGE_LOADING,
@@ -38,6 +39,11 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case actionTypes.AuthenticatedWithAlfred:
+            return {
+                ...state,
+                authenticatedWithAlfred: true,
+            };
         case actionTypes.ClearAlfredError:
             return {
                 ...state,
@@ -88,6 +94,7 @@ export default function (state = initialState, action) {
         case actionTypes.DisconnectedFromAlfred:
             return {
                 ...state,
+                authenticatedWithAlfred: false,
                 connectedToAlfred: false,
                 connectingToAlfred: false,
             };

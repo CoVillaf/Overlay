@@ -113,8 +113,7 @@ const OnRequestConfiguration = ({
         return;
     }
     dispatch(actions.RequestConfigurationBegin());
-    const configUrl = process.env.REACT_APP_CONFIG_URL;
-    fetch(new Request(configUrl))
+    fetch(new Request(CONFIGURATION_URL))
         .then(response => {
             if (!response.ok) {
                 throw new Error(`${response.status} ${response.statusText}`);

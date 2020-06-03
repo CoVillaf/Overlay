@@ -27,7 +27,7 @@ const LogInControls = ({
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    token: state.app.token,
+    token: state.app.twitchOAuthToken,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -3,7 +3,7 @@ import { actionTypes } from "../actions";
 import {
     APP_PAGE_LOADING,
     LOCAL_STORAGE_OBS_PASSWORD,
-    LOCAL_STORAGE_TOKEN,
+    LOCAL_STORAGE_TWITCH_OAUTH_TOKEN,
 } from "../constants";
 
 const GetInitialSetting = (settingKey, defaultSetting) => {
@@ -32,7 +32,7 @@ const initialState = {
     requestingConfiguration: false,
     requestingProfile: false,
     requestingUserInfo: false,
-    token: localStorage.getItem(LOCAL_STORAGE_TOKEN),
+    twitchOAuthToken: localStorage.getItem(LOCAL_STORAGE_TWITCH_OAUTH_TOKEN),
     userId: null,
     userName: null,
 };
@@ -55,10 +55,10 @@ export default function (state = initialState, action) {
                 obsError: null,
             };
         case actionTypes.ClearToken:
-            localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+            localStorage.removeItem(LOCAL_STORAGE_TWITCH_OAUTH_TOKEN);
             return {
                 ...state,
-                token: null,
+                twitchOAuthToken: null,
                 userId: null,
                 userName: null,
             };
@@ -170,11 +170,11 @@ export default function (state = initialState, action) {
                 ...state,
                 profileImageUrl: action.profileImageUrl,
             };
-        case actionTypes.SetToken:
-            localStorage.setItem(LOCAL_STORAGE_TOKEN, action.token);
+        case actionTypes.SetTwitchOAuthToken:
+            localStorage.setItem(LOCAL_STORAGE_TWITCH_OAUTH_TOKEN, action.token);
             return {
                 ...state,
-                token: action.token,
+                twitchOAuthToken: action.token,
             };
         case actionTypes.SetUserId:
             return {

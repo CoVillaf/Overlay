@@ -24,11 +24,11 @@ const LogOutControls = ({
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    token: state.app.token,
+    token: state.app.twitchOAuthToken,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onRevokeToken: () => dispatch(actions.RevokeToken()),
+    onRevokeToken: () => dispatch(actions.RevokeTwitchOAuthToken()),
 });
 
 export default connect(

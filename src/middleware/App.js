@@ -4,7 +4,7 @@ import {
     APP_PAGE_CONTROL_PANEL,
     APP_PAGE_OVERLAY,
     CONFIGURATION_URL,
-    LOCAL_STORAGE_OAUTH_STATE,
+    LOCAL_STORAGE_TWITCH_OAUTH_STATE,
     OAUTH_TOKEN_MIN_EXPIRES_IN,
 } from "../constants";
 
@@ -13,7 +13,7 @@ const CallHelix = ({
     request,
 }) => {
     const configuration = getState().app.configuration;
-    const token = getState().app.token;
+    const token = getState().app.twitchOAuthToken;
     return fetch(
         new Request(
             `https://api.twitch.tv/helix/${request}`,
@@ -47,8 +47,8 @@ const OnLoad = ({
             const hash = new URLSearchParams(window.location.hash.substring(1));
             window.history.replaceState({}, "", window.location.origin);
             const state = hash.get("state");
-            const expectedState = localStorage.getItem(LOCAL_STORAGE_OAUTH_STATE);
-            localStorage.removeItem(LOCAL_STORAGE_OAUTH_STATE);
+            const expectedState = localStorage.getItem(LOCAL_STORAGE_TWITCH_OAUTH_STATE);
+            localStorage.removeItem(LOCAL_STORAGE_TWITCH_OAUTH_STATE);
             if (state !== expectedState) {
                 console.error("State mismatch in OAuth code redirect!", {
                     expectedState,
@@ -57,12 +57,12 @@ const OnLoad = ({
                 return;
             }
             const token = hash.get("access_token");
-            dispatch(actions.SetToken({token}));
-            dispatch(actions.ValidateToken());
+            dispatch(actions.SetTwitchOAuthToken({token}));
+            dispatch(actions.ValidateTwitchOAuthToken());
         } else {
-            const token = getState().app.token;
+            const token = getState().app.twitchOAuthToken;
             if (token != null) {
-                dispatch(actions.ValidateToken());
+                dispatch(actions.ValidateTwitchOAuthToken());
             }
         }
         dispatch(actions.SetPage({page: APP_PAGE_CONTROL_PANEL}));
@@ -152,7 +152,7 @@ const OnRequestToken = ({
     window.crypto.getRandomValues(array);
     const oauthRequestState = array[0];
     localStorage.setItem(
-        LOCAL_STORAGE_OAUTH_STATE,
+        LOCAL_STORAGE_TWITCH_OAUTH_STATE,
         JSON.stringify(oauthRequestState)
     );
     const clientId = configuration.clientId;
@@ -199,7 +199,7 @@ const OnRequestUserInfo = ({
         });
 };
 
-const OnRevokeToken = ({
+const OnRevokeTwitchOAuthToken = ({
     action,
     dispatch,
     getState,
@@ -209,7 +209,7 @@ const OnRevokeToken = ({
         dispatch(actions.RequestConfiguration({then: action}));
         return;
     }
-    const token = getState().app.token;
+    const token = getState().app.twitchOAuthToken;
     if (token == null) {
         return;
     }
@@ -234,7 +234,7 @@ const OnRevokeToken = ({
         });
 };
 
-const OnValidateToken = ({
+const OnValidateTwitchOAuthToken = ({
     action,
     dispatch,
     getState,
@@ -244,7 +244,7 @@ const OnValidateToken = ({
         dispatch(actions.RequestConfiguration({then: action}));
         return;
     }
-    const token = getState().app.token;
+    const token = getState().app.twitchOAuthToken;
     if (token == null) {
         return;
     }
@@ -268,7 +268,7 @@ const OnValidateToken = ({
             if (response.client_id === configuration.clientId) {
                 if (response.expires_in < OAUTH_TOKEN_MIN_EXPIRES_IN) {
                     console.warn("OAuth token is expiring soon... revoking it");
-                    dispatch(actions.RevokeToken());
+                    dispatch(actions.RevokeTwitchOAuthToken());
                     return;
                 }
                 dispatch(actions.SetUserId({userId: response.user_id}));
@@ -277,7 +277,7 @@ const OnValidateToken = ({
                     expected: configuration.clientId,
                     actual: response.client_id,
                 });
-                dispatch(actions.RevokeToken());
+                dispatch(actions.RevokeTwitchOAuthToken());
             }
         })
         .catch(error => {
@@ -292,8 +292,8 @@ const handlers = {
     [actionTypes.RequestConfiguration]: OnRequestConfiguration,
     [actionTypes.RequestToken]: OnRequestToken,
     [actionTypes.RequestUserInfo]: OnRequestUserInfo,
-    [actionTypes.RevokeToken]: OnRevokeToken,
-    [actionTypes.ValidateToken]: OnValidateToken,
+    [actionTypes.RevokeTwitchOAuthToken]: OnRevokeTwitchOAuthToken,
+    [actionTypes.ValidateTwitchOAuthToken]: OnValidateTwitchOAuthToken,
 };
 
 export default function({ getState, dispatch }) {

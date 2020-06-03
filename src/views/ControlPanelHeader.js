@@ -69,7 +69,7 @@ const mapStateToProps = (state, ownProps) => ({
         : null
     ),
     profileImageUrl: state.app.profileImageUrl,
-    token: state.app.token,
+    token: state.app.twitchOAuthToken,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

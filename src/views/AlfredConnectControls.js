@@ -72,7 +72,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onConnectToAlfred: (password) => dispatch(actions.ConnectToAlfred({password})),
+    onConnectToAlfred: () => dispatch(actions.ConnectToAlfred()),
     onSetAlfredKey: (key) => dispatch(actions.SetKey({key})),
 });
 

@@ -42,7 +42,7 @@ const OnLoad = ({
         dispatch(actions.SetKey({key}));
         dispatch(actions.SetPage({page: APP_PAGE_OVERLAY}));
     } else {
-        if (search.has("OAuth")) {
+        if (search.has("Twitch")) {
             const hash = new URLSearchParams(window.location.hash.substring(1));
             window.history.replaceState({}, "", window.location.origin);
             const state = hash.get("state");

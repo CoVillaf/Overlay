@@ -13,6 +13,7 @@ const AlfredConnectControls = ({
     connectingToAlfred,
     onConnectToAlfred,
     onSetAlfredKey,
+    twitchOAuthToken,
 }) => {
     const [ newAlfredKey, setNewAlfredKey ] = useState(alfredKey);
     if (authenticated) {
@@ -49,12 +50,16 @@ const AlfredConnectControls = ({
         >
             Connect
         </button>
-        <input
-            type="password"
-            placeholder="key"
-            value={newAlfredKey}
-            onChange={(event) => setNewAlfredKey(event.target.value)}
-        />
+        {(
+            twitchOAuthToken
+            ? null
+            : <input
+                type="password"
+                placeholder="key"
+                value={newAlfredKey}
+                onChange={(event) => setNewAlfredKey(event.target.value)}
+            />
+        )}
         {(
             (alfredError == null)
             ? null
@@ -69,6 +74,7 @@ const mapStateToProps = (state, ownProps) => ({
     authenticated: state.app.authenticatedWithAlfred,
     connectedToAlfred: state.app.connectedToAlfred,
     connectingToAlfred: state.app.connectingToAlfred,
+    twitchOAuthToken: state.app.twitchOAuthToken,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

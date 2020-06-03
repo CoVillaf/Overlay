@@ -13,15 +13,18 @@ const OnConnectedToAlfred = ({
     getState,
 }) => {
     const key = getState().app.key;
-    if (key) {
-        SendToAlfred({
-            enhancements,
-            message: {
-                type: "Authenticate",
-                key,
-            },
-        });
+    const twitchOAuthToken = getState().app.twitchOAuthToken;
+    const message = {
+        type: "Authenticate",
+    };
+    if (twitchOAuthToken) {
+        message.twitch = twitchOAuthToken;
+    } else if (key) {
+        message.key = key;
+    } else {
+        return;
     }
+    SendToAlfred({enhancements, message});
 };
 
 const messageActionFactories = {

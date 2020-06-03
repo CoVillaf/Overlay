@@ -98,7 +98,7 @@ export default function (state = initialState, action) {
                 connectedToObs: false,
                 connectingToObs: false,
             };
-        case actionTypes.ObsAuthenticated:
+        case actionTypes.AuthenticatedWithObs:
             return {
                 ...state,
                 authenticatedWithObs: true,

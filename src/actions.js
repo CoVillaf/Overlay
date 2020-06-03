@@ -9,6 +9,7 @@ const DefineAction = (type) => {
 };
 
 [
+    "AuthenticatedWithObs",
     "ClearAlfredError",
     "ClearObsError",
     "ClearToken",
@@ -24,7 +25,6 @@ const DefineAction = (type) => {
     "DisconnectFromObs",
     "Load",
     "ObsAuthenticate",
-    "ObsAuthenticated",
     "RequestChannelInfo",
     "RequestChannelInfoBegin",
     "RequestChannelInfoEnd",

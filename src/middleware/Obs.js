@@ -41,7 +41,7 @@ const OnConnectedToObs = ({
                 }));
             } else {
                 console.log("OBS requires no authentication");
-                dispatch(actions.ObsAuthenticated());
+                dispatch(actions.AuthenticatedWithObs());
             }
         })
         .catch(error => {
@@ -135,7 +135,7 @@ const OnObsAuthenticate = ({
         }))
         .then(() => {
             console.log("Successfully authenticated with OBS");
-            dispatch(actions.ObsAuthenticated());
+            dispatch(actions.AuthenticatedWithObs());
         })
         // @ts-ignore
         .catch(error => {

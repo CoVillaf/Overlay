@@ -70,3 +70,12 @@ input {
 .error-message {
     color: var(--error-color);
 }
+
+.input-validated {
+    border-width: 2px;
+    border-style: solid;
+}
+
+.input-invalid {
+    border-color: red;
+}

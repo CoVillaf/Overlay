@@ -272,6 +272,7 @@ const OnValidateTwitchOAuthToken = ({
                     return;
                 }
                 dispatch(actions.SetUserId({userId: response.user_id}));
+                dispatch(actions.ConnectToAlfred());
             } else {
                 console.error("OAuth token is for the wrong client", {
                     expected: configuration.clientId,

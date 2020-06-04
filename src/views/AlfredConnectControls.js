@@ -42,10 +42,11 @@ const AlfredConnectControls = ({
             className="AlfredConnectControls-button"
             type="button"
             onClick={() => {
-                if (newAlfredKey !== alfredKey) {
+                if (newAlfredKey === alfredKey) {
+                    onConnectToAlfred();
+                } else {
                     onSetAlfredKey(newAlfredKey);
                 }
-                onConnectToAlfred();
             }}
         >
             Connect

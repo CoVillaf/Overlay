@@ -38,6 +38,12 @@ const OnConnectToAlfred = ({
     enhancements,
     getState,
 }) => {
+    if (
+        getState().app.connectedToAlfred
+        || getState().app.connectingToAlfred
+    ) {
+        return;
+    }
     const configuration = getState().app.configuration;
     if (!configuration) {
         dispatch(actions.RequestConfiguration({then: action}));
@@ -103,11 +109,18 @@ const OnSetAlfredError = ({
     console.warn("Alfred reported error:", error);
 };
 
+const OnSetKey = ({
+    dispatch,
+}) => {
+    dispatch(actions.ConnectToAlfred());
+};
+
 const actionHandlers = {
     [actionTypes.ConnectedToAlfred]: OnConnectedToAlfred,
     [actionTypes.ConnectToAlfred]: OnConnectToAlfred,
     [actionTypes.DisconnectFromAlfred]: OnDisconnectFromAlfred,
     [actionTypes.SetAlfredError]: OnSetAlfredError,
+    [actionTypes.SetKey]: OnSetKey,
 };
 
 export default function({ getState, dispatch }) {

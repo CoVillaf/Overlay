@@ -26,6 +26,7 @@ const DefineAction = (type) => {
     "DisconnectFromObs",
     "Load",
     "ObsAuthenticate",
+    "ReceiveAlfredData",
     "RequestChannelInfo",
     "RequestChannelInfoBegin",
     "RequestChannelInfoEnd",

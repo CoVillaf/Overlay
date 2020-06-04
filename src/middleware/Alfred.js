@@ -8,6 +8,18 @@ const SendToAlfred = ({
     ws.send(JSON.stringify(message));
 };
 
+const OnAuthenticatedWithAlfred = ({
+    enhancements,
+}) => {
+    SendToAlfred({
+        enhancements,
+        message: {
+            type: "Subscribe",
+            path: [],
+        }
+    });
+};
+
 const OnConnectedToAlfred = ({
     enhancements,
     getState,
@@ -29,6 +41,7 @@ const OnConnectedToAlfred = ({
 
 const messageActionFactories = {
     Authenticated: () => actions.AuthenticatedWithAlfred(),
+    Data: ({data}) => actions.ReceiveAlfredData({data}),
     Error: ({message}) => actions.SetAlfredError({error: message}),
 };
 
@@ -116,6 +129,7 @@ const OnSetKey = ({
 };
 
 const actionHandlers = {
+    [actionTypes.AuthenticatedWithAlfred]: OnAuthenticatedWithAlfred,
     [actionTypes.ConnectedToAlfred]: OnConnectedToAlfred,
     [actionTypes.ConnectToAlfred]: OnConnectToAlfred,
     [actionTypes.DisconnectFromAlfred]: OnDisconnectFromAlfred,

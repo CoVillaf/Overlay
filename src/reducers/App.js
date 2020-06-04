@@ -16,6 +16,7 @@ const GetInitialSetting = (settingKey, defaultSetting) => {
 };
 
 const initialState = {
+    alfredData: null,
     alfredError: null,
     authenticatedWithAlfred: false,
     authenticatedWithObs: false,
@@ -94,6 +95,7 @@ export default function (state = initialState, action) {
         case actionTypes.DisconnectedFromAlfred:
             return {
                 ...state,
+                alfredData: null,
                 authenticatedWithAlfred: false,
                 connectedToAlfred: false,
                 connectingToAlfred: false,
@@ -109,6 +111,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 authenticatedWithObs: true,
+            };
+        case actionTypes.ReceiveAlfredData:
+            return {
+                ...state,
+                alfredData: action.data,
             };
         case actionTypes.RequestConfigurationBegin:
             return {

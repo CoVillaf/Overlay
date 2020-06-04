@@ -37,6 +37,7 @@ const DefineAction = (type) => {
     "RequestUserInfoBegin",
     "RequestUserInfoEnd",
     "RevokeTwitchOAuthToken",
+    "SelectDataEditorPath",
     "SetConfiguration",
     "SetKey",
     "SetAlfredError",

@@ -1,0 +1,13 @@
+.PathBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.PathBar > *:not(:first-child) {
+    margin-left: 10px;
+}
+
+.PathBar-separator {
+    font-size: 200%;
+}
